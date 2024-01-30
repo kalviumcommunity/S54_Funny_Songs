@@ -1,0 +1,11 @@
+{
+  "name": "s54_funny_songs",
+  "version": "1.0.0",
+  "description": "Welcome to the ASAP project! 🎉 This repository is a unique compilation of humorous songs and quirky audio clips curated to bring joy and laughter into your life. The ASAP project is a celebration of the wonderfully absurd side of audio entertainment, designed to deliver a dose of silliness whenever you need it.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
