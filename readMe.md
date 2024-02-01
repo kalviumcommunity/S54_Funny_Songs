@@ -24,8 +24,4 @@ Join the silliness by contributing your own funny audio clips or compositions! F
 
 ### Getting Started
 
-To experience the joy of silliness, follow these simple steps:
-
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/your-username/asap-project.git
+Deployed Link ( Render Website ) : https://s54-funny-songs.onrender.com/ping
