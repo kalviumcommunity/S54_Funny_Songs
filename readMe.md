@@ -24,4 +24,5 @@ Join the silliness by contributing your own funny audio clips or compositions! F
 
 ### Getting Started
 
-Deployed Link ( Render Website ) : https://s54-funny-songs.onrender.com/ping
+Deployed Link ( Render Website ) : https://s54-funny-songs.onrender.com
+
