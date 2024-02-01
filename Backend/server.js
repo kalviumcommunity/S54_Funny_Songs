@@ -4,7 +4,7 @@ const port = process.env.PUBLIC_PORT || 3000 ;
 
 // define the ping route
 
-app.get('/ping', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Funny Songs');
 });
 
