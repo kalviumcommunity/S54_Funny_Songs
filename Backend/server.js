@@ -1,17 +1,21 @@
-const express = require('express');
-const app = express();
-const port = process.env.PUBLIC_PORT || 3000 ;
+const express = require('express')
+const app = express()
+const port =3000
+const connectDB = require('./db')
 
-// define the ping route
+app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.send('Funny Songs');
-});
+connectDB()
+
+app.get('/',(req, res)=>{
+    res.send('<h1>🎼 FunnySongs 😂</h1>');
+})
 
 if (require.main === module) {
-    app.listen(port, () => {
-    console.log(`server running on PORT: ${port}`);
-});
+	app.listen(port, () => {
+		console.log(`server running on PORT: ${port}`)
+	})
 }
 
-module.exports = app;
+module.exports = app
+
