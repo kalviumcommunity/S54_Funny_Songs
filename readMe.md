@@ -24,5 +24,10 @@ Join the silliness by contributing your own funny audio clips or compositions! F
 
 ### Getting Started
 
-Deployed Link ( Render Website ) : https://s54-funny-songs.onrender.com
+Deployment Links :
+
+Front-End Deployment Link ( Vercel ) : https://funny-songs.vercel.app/
+
+Back-End Deployed Link ( Render Website ) : https://s54-funny-songs.onrender.com
+
 
