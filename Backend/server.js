@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
 	res.status(500).send("Something went wrong!");
 });
 
-// app.use("/posts",router)
+app.use("/Songs",router)
 
 app.listen(3000,() => {
 	console.log("Running on port 3000")
