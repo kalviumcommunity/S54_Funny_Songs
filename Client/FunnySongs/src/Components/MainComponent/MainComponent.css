@@ -20,10 +20,16 @@
     border-radius: 12px;
     width: 400px; 
   }
-  
+
+  iframe:hover{
+    width: 300px;
+    height: 300px;
+    transform: scale(1.2);
+  }
   
   .iframe-container:nth-child(even) {
     color: black;
     background-color: rgb(129, 129, 129);
   }
+  
   
