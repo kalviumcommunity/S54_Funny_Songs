@@ -1,21 +1,38 @@
-const express = require('express')
-const app = express()
-const port =3000
-const connectDB = require('./db')
+const express = require("express");
+const { MongoClient } = require("mongodb");
+var cors = require('cors')
+const app = express();
+app.use(cors())
+const {router} = require("./Routers")
+const mongoose = require("mongoose")
+require("dotenv").config()
 
-app.use(express.json())
-
-connectDB()
-
-app.get('/',(req, res)=>{
-    res.send('<h1>🎼 FunnySongs 😂</h1>');
-})
-
-if (require.main === module) {
-	app.listen(port, () => {
-		console.log(`server running on PORT: ${port}`)
-	})
+async function connectDatabase(){
+	await mongoose.connect(process.env.mongoUrl)
 }
 
-module.exports = app
 
+app.get("/ping", (req, res) => {
+	res.send("Hi");
+});
+
+app.get("/", (req, res) => {
+	connectDatabase()
+	.then(() => {
+		console.log('Connected to Database!!!')})
+		res.status(200).send("Connected to Database!!!")
+	.catch(err => {
+		console.error('Error connecting to Database',err)});;
+	res.end()
+});
+
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).send("Something went wrong!");
+});
+
+// app.use("/posts",router)
+
+app.listen(3000,() => {
+	console.log("Running on port 3000")
+})
