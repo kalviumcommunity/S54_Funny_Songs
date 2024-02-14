@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.Landing-Container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-family: "Sofia Sans Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 17px;
+}
+.Landing-Content{
+    width: 50%;
+    height: 400px;
+    line-height: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.Landing-Content>button{
+    width: 10%;
+
+}
