@@ -15,6 +15,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import "./NavBar.css"
 import logo from "../Assets/NavLogo.png";
+import { Link } from 'react-router-dom';
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -95,8 +97,10 @@ export default function NavBar() {
             }}
             open={isMenuOpen}
             onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+        >   
+            <Link to="/Profile" >
+                <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            </Link>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
