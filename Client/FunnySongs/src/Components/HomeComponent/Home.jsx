@@ -1,15 +1,16 @@
 import React from 'react'
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 import "./Home.css"
 import MainComponent from "../MainComponent/MainComponent.jsx"
 import NavBar from '../NavbarComponent/NavBar'
 import Landinglogo from "../Assets/LandingLogo.png"
+import Footer from "../FooterComponent/Footer.jsx"
 
 const HomeComponent = () => {
 
     return (
-
         <div>
             <NavBar/>
             <div className='Landing-Container' >  
@@ -23,12 +24,15 @@ const HomeComponent = () => {
                         </h2>
                     </div>
                     <div>
-                        <Button variant="contained" color="success" size='large'>
-                            Let's Laugh
-                        </Button>
+                        <Link to="/SignUp" >
+                            <Button variant="contained" color="success" size='large'>
+                                Let's Laugh
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

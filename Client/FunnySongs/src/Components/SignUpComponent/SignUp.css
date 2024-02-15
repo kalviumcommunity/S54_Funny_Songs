@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
+
+.MuiAppBar-root {
+    height: 70px;
+}
+
+.MuiToolbar-root {
+    height: 70px; 
+}
+
+.MuiTypography-h6 {
+    font-size: 24px; 
+}
+
+.MuiInputBase-input {
+    font-size: 16px;
+}
+
+.MuiIconButton-root {
+    padding: 12px;
+}
+
+.MuiBadge-root {
+    .MuiBadge-badge {
+        font-size: 12px; 
+        height: 20px; 
+        width: 20px; 
+    }
+}
