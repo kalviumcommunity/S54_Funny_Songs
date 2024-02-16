@@ -48,5 +48,5 @@ signuprouter.post("/", async (req, res) => {
     }
 });
 
-module.exports = { songRouter, router }
+module.exports = { songRouter, signuprouter }
 
