@@ -4,8 +4,9 @@ const mongoose = require("mongoose")
 const express = require("express")
 const { Song, User } = require("./data/schema")
 const app = express()
-const router = express.Router()
+const signuprouter = express.Router()
 const songRouter = express.Router()
+
 require("dotenv").config()
 
 signuprouter.use(express.json())
