@@ -1,8 +1,33 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-const SongSchema = new schema({
+// User Schema
+const UserSchema = new Schema({
+    FirstName: {
+        type: String,
+        required: true
+    },
+    LastName: {
+        type: String,
+        required: true
+    },
+    EmailAddress: {
+        type: String,
+        required: true,
+        unique: true // Ensuring uniqueness of email addresses
+    },
+    Password: {
+        type: String,
+        required: true
+    },
+    // You might want to include additional fields for user profile information
+}, { timestamps: true });
+
+const User = mongoose.model("User", UserSchema);
+
+// Song Schema
+const SongSchema = new Schema({
     SongId: {
         type: Number,
         required: true
@@ -17,14 +42,11 @@ const SongSchema = new schema({
     },
     Release: Number,
     Category: String,
-    Artist:String,
-    Name:String,
-    UserName:String,
-    Password:String,
+    Artist: String,
     likes: Number,
     time: { type: Date, default: Date.now() }
-},{ timestamps: true })
+}, { timestamps: true });
 
-const Songs = mongoose.model("Song",SongSchema)
+const Song = mongoose.model("Song", SongSchema);
 
-module.exports = Songs
+module.exports = { User, Song };

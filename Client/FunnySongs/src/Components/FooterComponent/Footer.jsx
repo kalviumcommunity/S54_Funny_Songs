@@ -12,7 +12,7 @@ function Footer() {
       <div className="mainfooter">
         <div className="left">
           <div className="Heading">
-          <img src={logo} alt="Logo" style={{ height: '120px', marginRight: '10px' }} />
+          <img src={logo} alt="Logo" style={{ height: '80px', marginRight: '10px' }} />
           </div>
           <div className="othertext">
             <span>&copy;2024</span>
