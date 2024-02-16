@@ -33,7 +33,7 @@ function SignUp(props) {
         event.preventDefault();
         console.log(formData);
         try {
-            await axios.post('https://s54-funny-songs.onrender.com//signup', formData);
+            await axios.post('https://s54-funny-songs.onrender.com/signup', formData);
             toast.success('Signup successful!');
             setTimeout(() => {
                 navigate('/Main');
