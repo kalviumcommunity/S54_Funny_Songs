@@ -30,7 +30,7 @@ songRouter.get("/", async (req, res) => {
     })
 })
 
-signUprouter.post("/", async (req, res) => { 
+signUpRouter.post("/", async (req, res) => { 
     const { FirstName, LastName, EmailAddress, Password } = req.body;
     console.log(req.body);
     try {
