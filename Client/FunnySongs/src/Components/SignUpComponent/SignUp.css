@@ -1,29 +1,103 @@
-@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mina&display=swap');
 
-.MuiAppBar-root {
-    height: 70px;
-}
-
-.MuiToolbar-root {
-    height: 70px; 
-}
-
-.MuiTypography-h6 {
-    font-size: 24px; 
-}
-
-.MuiInputBase-input {
-    font-size: 16px;
-}
-
-.MuiIconButton-root {
-    padding: 12px;
-}
-
-.MuiBadge-root {
-    .MuiBadge-badge {
-        font-size: 12px; 
-        height: 20px; 
-        width: 20px; 
+    body{
+        height: 100%;
+        width: 100%;
     }
-}
+    .footer {
+    bottom: 0px;
+    font-family: 'Mina', sans-serif;
+    width: 100% !important;
+    height: 13rem;
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(209, 210, 213);
+    color: rgb(11, 1, 1);
+    box-shadow: -1px -0px 10px rgb(108, 117, 128);
+    margin-top: 2rem;
+    border-bottom: 50px solid rgb(0, 0, 0,0.9);
+    box-shadow: 0px 0px 60px 0px rgba(0,0,0);
+    }
+    
+    .mainfooter {
+        width: 70%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        gap: 2rem;
+        font-weight: 600;
+    }
+    
+    .othertext {
+        display: flex;
+        gap: 15px;
+        text-align: center;
+        justify-content: center;
+    }
+    .Heading {
+        display: flex;
+        position: relative;
+        margin-bottom: 0px;
+        margin-left: 0px;
+    }
+    .Icon {
+        font-size: 35px !important;
+        position: absolute;
+    }
+    .right {
+        display: flex;
+        margin-bottom: 44px;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: -20rem;
+    }
+    
+    .Social {
+        font-size: 50px !important;
+        margin-left: 95px;
+    }
+    
+    .left {
+        margin-left: -20rem;
+    }
+    a {
+        text-decoration: none;
+    }
+    
+    .Social>span:hover {
+        cursor: pointer;
+        color: rgb(237, 71, 71) !important;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+    
+
+    @media only screen and (max-width: 600px) {
+        .right {
+        margin-right: 0px;
+        }
+        .left {
+        margin-left: 0px;
+        }
+        .mainfooter {
+        width: 100%;
+    
+        padding: 1rem;
+        gap: 0rem;
+        }
+        .Social {
+        margin-left: 40px;
+        }
+    
+        .Heading {
+        margin-left: 30px;
+        }
+        .footer {
+        height: 17rem;
+        }
+    }
+
