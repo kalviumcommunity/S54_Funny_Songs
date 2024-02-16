@@ -9,7 +9,7 @@ const MainComponent = () => {
 
     useEffect(() => {
         // Fetch data from your backend API 
-        axios.get('https://s54-funny-songs.onrender.com/Songs/')
+        axios.get('https://s54-funny-songs.onrender.com')
             .then(response => {
                 setSongs(response.data);
             })
