@@ -5,7 +5,7 @@ const { MongoClient } = require("mongodb");
 var cors = require('cors')
 const app = express();
 app.use(cors())
-const { router, songRouter } = require("./Routers")
+const { signUpRouter, songRouter } = require("./Routers")
 const mongoose = require("mongoose")
 require("dotenv").config()
 
@@ -32,8 +32,8 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/songs", songRouter)
-app.use("/signup", signuprouter) 
+app.use("/signup", signUpRouter) 
 
 app.listen(3000, () => {
-    console.log("Running on port 5174")
+    console.log("Running on port 3000")
 })
