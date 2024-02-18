@@ -4,12 +4,12 @@ const mongoose = require("mongoose")
 const express = require("express")
 const { Song, User } = require("./data/schema")
 const app = express()
-const router = express.Router()
+const signUpRouter = express.Router()
 const songRouter = express.Router()
 
 require("dotenv").config()
 
-router.use(express.json())
+signUpRouter.use(express.json())
 songRouter.use(express.json())
 
 async function connect() {
@@ -30,7 +30,7 @@ songRouter.get("/", async (req, res) => {
     })
 })
 
-router.post("/", async (req, res) => { 
+signUpRouter.post("/", async (req, res) => { 
     const { FirstName, LastName, EmailAddress, Password } = req.body;
     console.log(req.body);
     try {
@@ -48,5 +48,5 @@ router.post("/", async (req, res) => {
     }
 });
 
-module.exports = { songRouter, router }
+module.exports = { songRouter, signUpRouter }
 

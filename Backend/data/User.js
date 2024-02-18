@@ -18,9 +18,8 @@ const userData = [
     },
 ];
 
-// Adding user data to the database
 User.insertMany(userData)
     .then(() => console.log('Users added successfully!'))
     .catch(err => console.error('Error adding users:', err));
 
-module.exports = { mongoose }; // Exporting mongoose if needed elsewhere
+module.exports = { mongoose }; 

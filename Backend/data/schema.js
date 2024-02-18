@@ -15,13 +15,12 @@ const UserSchema = new Schema({
     EmailAddress: {
         type: String,
         required: true,
-        unique: true // Ensuring uniqueness of email addresses
+        unique: true
     },
     Password: {
         type: String,
         required: true
     },
-    // You might want to include additional fields for user profile information
 }, { timestamps: true });
 
 const User = mongoose.model("User", UserSchema);

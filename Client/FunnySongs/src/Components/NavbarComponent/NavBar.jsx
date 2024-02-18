@@ -159,68 +159,57 @@ export default function NavBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-                <Toolbar style={{ padding:"40px", backgroundColor:"rgb(0,0,0,0.9)", boxShadow: "0 0px 100px black", marginBottom: "0",fontFamily:"Kumbh Sans" }}>
+            <Toolbar style={{ padding:"10px", backgroundColor:"rgb(0,0,0,0.9)", boxShadow: "0 0px 100px black", marginBottom: "0",fontFamily:"Kumbh Sans" }}>
 
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    sx={{ mr: 1 }}
+                    onClick={handleMobileMenuOpen}
+                >
+                    <MenuIcon style={{color:"white"}} />
+                </IconButton>
+                <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '10px' }} />
+                <Search>
+                    <SearchIconWrapper>
+                        <SearchIcon style={{ color: 'white', fontSize: 25 }} /> 
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        placeholder="Search…"
+                        inputProps={{ 'aria-label': 'search' }}
+                    />
+                </Search>
+                <Box sx={{ flexGrow: 1 }} />
+                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                        <Badge badgeContent={4} color="error">
+                            <MailIcon style={{ color: 'white', fontSize: 25 }} /> 
+                        </Badge>
+                    </IconButton>
                     <IconButton
                         size="large"
-                        edge="start"
+                        aria-label="show 17 new notifications"
                         color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 1 }}
                     >
-                        <MenuIcon style={{color:"white"}} />
+                        <Badge badgeContent={17} color="success">
+                            <NotificationsIcon style={{ color: 'white', fontSize: 25 }} /> 
+                        </Badge>
                     </IconButton>
-                    <img src={logo} alt="Logo" style={{ height: '150px', marginRight: '10px' }} />
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon style={{ color: 'white', fontSize: 35 }} /> 
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <MailIcon style={{ color: 'white', fontSize: 35 }} /> 
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="success">
-                                <NotificationsIcon style={{ color: 'white', fontSize: 35 }} /> 
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle style={{ color: 'white', fontSize: 45 }} /> 
-                        </IconButton>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon style={{ color: 'white', fontSize: 30 }} /> 
-                        </IconButton>
-                    </Box>
-                </Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="end"
+                        aria-label="account of current user"
+                        aria-controls={menuId}
+                        aria-haspopup="true"
+                        onClick={handleProfileMenuOpen}
+                        color="inherit"
+                    >
+                        <AccountCircle style={{ color: 'white', fontSize: 30 }} /> 
+                    </IconButton>
+                </Box>
+            </Toolbar>
             {renderMobileMenu}
             {renderMenu}
         </Box>

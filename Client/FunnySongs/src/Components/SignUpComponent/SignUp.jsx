@@ -17,6 +17,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./SignUp.css";
 import { useNavigate } from 'react-router-dom';
+import NavBar from "../NavbarComponent/NavBar.jsx"
 
 function SignUp(props) {
 
@@ -51,6 +52,7 @@ function SignUp(props) {
 
     return (
         <div>
+            <NavBar/>
             <ToastContainer />
             <ThemeProvider theme={createTheme()}>
                 <Container component="main" maxWidth="xs" >
@@ -63,7 +65,7 @@ function SignUp(props) {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 6, bgcolor: 'secondary.main' }}>
+                        <Avatar sx={{ m: 4, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
@@ -149,7 +151,7 @@ function SignUp(props) {
                     </Box>
                 </Container>
             </ThemeProvider>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

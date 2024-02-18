@@ -18,6 +18,27 @@ const MainComponent = () => {
             });
     }, []);
 
+    const handleUpdate = (id) => {
+        // Implement your logic for updating the song here
+        console.log('Updating song with ID:', id);
+    };
+
+    const handleDelete = async (songId) => {
+        try {
+            // Send a DELETE request to delete the song with the given SongId
+            await axios.delete(`https://s54-funny-songs.onrender.com/delete/${songId}`);
+            // Remove the deleted song from the state
+            setSongs(songs.filter(song => song.SongId !== songId));
+            console.log('Song deleted successfully:', songId);
+        } catch (error) {
+            console.error('Error deleting song:', error);
+        }
+    };
+    
+    
+    
+    
+
     return (
         <div>
             <NavBar/>
@@ -31,11 +52,13 @@ const MainComponent = () => {
                             allowFullScreen=""
                             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                             loading="lazy"
-                            style={{ borderRadius: '12px', width: '100%', height: '250px', marginTop: "30px"}}
+                            style={{ borderRadius: '12px', width: '100%', height: '60%', marginTop: "30px"}}
                         ></iframe>
                         <p>Artist : {song.Artist}</p>
                         <p>Release : {song.Release}</p>
                         <p>Category: {song.Category}</p>
+                        <button onClick={() => handleUpdate(song._id)}>Update</button>
+                        <button onClick={() => handleDelete(song._id)}>Delete</button>
                     </div>
                 ))}
             </div>
@@ -45,6 +68,3 @@ const MainComponent = () => {
 }
 
 export default MainComponent;
-
-
-
