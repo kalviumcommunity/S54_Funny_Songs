@@ -15,6 +15,7 @@ require("dotenv").config()
 signUpRouter.use(express.json())
 songRouter.use(express.json())
 
+
 async function connect() {
     await mongoose.connect(process.env.mongoUrl)
 }
