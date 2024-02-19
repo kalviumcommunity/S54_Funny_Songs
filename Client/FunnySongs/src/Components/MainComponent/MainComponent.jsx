@@ -57,8 +57,8 @@ const MainComponent = () => {
                         <p>Artist : {song.Artist}</p>
                         <p>Release : {song.Release}</p>
                         <p>Category: {song.Category}</p>
-                        <button onClick={() => handleUpdate(song._id)}>Update</button>
-                        <button onClick={() => handleDelete(song._id)}>Delete</button>
+                        {/* <button onClick={() => handleUpdate(song._id)}>Update</button> */}
+                        {/* <button onClick={() => handleDelete(song._id)}>Delete</button> */}
                     </div>
                 ))}
             </div>
