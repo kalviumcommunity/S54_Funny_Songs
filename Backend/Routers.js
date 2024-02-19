@@ -87,5 +87,4 @@ deleteRouter.delete("/:id", async (req, res) => {
 
 
 
-module.exports = { songRouter, signUpRouter }
-
+module.exports = { songRouter, signUpRouter, editRouter, deleteRouter };

@@ -8,7 +8,6 @@ const MainComponent = () => {
     const [songs, setSongs] = useState([]);
 
     useEffect(() => {
-        // Fetch data from your backend API 
         axios.get('https://s54-funny-songs.onrender.com/songs')
             .then(response => {
                 setSongs(response.data);
@@ -19,7 +18,6 @@ const MainComponent = () => {
     }, []);
 
     const handleUpdate = async (id) => {
-        // Assuming you have state variables to handle input fields for updating Artist, Release, and Category
         const updatedData = {
             Artist: updatedArtist,
             Release: updatedRelease,
@@ -28,7 +26,6 @@ const MainComponent = () => {
     
         try {
             const response = await axios.put(`https://s54-funny-songs.onrender.com/edit/${id}`, updatedData);
-            // Assuming you want to update the UI after successful update
             const updatedSongIndex = songs.findIndex(song => song._id === id);
             const updatedSongs = [...songs];
             updatedSongs[updatedSongIndex] = response.data;
@@ -42,7 +39,6 @@ const MainComponent = () => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`https://s54-funny-songs.onrender.com/delete/${id}`);
-            // Assuming you want to update the UI after successful deletion
             const filteredSongs = songs.filter(song => song._id !== id);
             setSongs(filteredSongs);
         } catch (error) {
