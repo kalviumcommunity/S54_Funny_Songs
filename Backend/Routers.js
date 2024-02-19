@@ -14,6 +14,9 @@ require("dotenv").config()
 
 signUpRouter.use(express.json())
 songRouter.use(express.json())
+editRouter.use(express.json())
+deleteRouter.use(express.json())
+
 
 
 async function connect() {
