@@ -1,6 +1,5 @@
 const express = require("express");
 const { Song, User } = require("./data/schema");
-const { ExpressError } = require("./Controller");
 const { wrapAsync } = require("./middleware/error");
 
 const signUpRouter = express.Router();
@@ -12,6 +11,15 @@ signUpRouter.use(express.json());
 songRouter.use(express.json());
 songEditRouter.use(express.json());
 songDeleteRouter.use(express.json());
+
+class ExpressError extends Error {
+    constructor(statusCode, message) {
+        super();
+        this.statusCode = statusCode;
+        this.message = message;
+    }
+}
+
 
 songEditRouter.put("/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
@@ -32,4 +40,4 @@ songDeleteRouter.delete("/:id", wrapAsync(async (req, res) => {
     res.send("Deleted!");
 }));
 
-module.exports = { signUpRouter, songRouter, songEditRouter, songDeleteRouter };
+module.exports = { signUpRouter, songRouter, songEditRouter, songDeleteRouter , ExpressError };

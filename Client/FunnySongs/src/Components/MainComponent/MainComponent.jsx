@@ -18,33 +18,29 @@ const MainComponent = () => {
             });
     }, []);
 
-    const handleUpdate = (id) => {
-        // Implement your logic for updating the song here
+    const handleUpdate = async (id) => {
+        // Implement update logic here
         console.log('Updating song with ID:', id);
     };
 
-    const handleDelete = async (songId) => {
+    const handleDelete = async (id) => {
         try {
-            // Send a DELETE request to delete the song with the given SongId
-            await axios.delete(`https://s54-funny-songs.onrender.com/delete/${songId}`);
+            // Send a DELETE request to delete the song with the given id
+            await axios.delete(`https://s54-funny-songs.onrender.com/delete/${id}`);
             // Remove the deleted song from the state
-            setSongs(songs.filter(song => song.SongId !== songId));
-            console.log('Song deleted successfully:', songId);
+            setSongs(songs.filter(song => song.SongId !== id));
+            console.log('Song deleted successfully:', id);
         } catch (error) {
             console.error('Error deleting song:', error);
         }
     };
-    
-    
-    
-    
 
     return (
         <div>
             <NavBar/>
             <div className="main-container">
                 {songs.map(song => (
-                    <div key={song._id} className="iframe-container">
+                    <div key={song.SongId} className="iframe-container">
                         <iframe
                             title={`spotifyTrack${song.SongId}`}
                             src={song.SongLink}
@@ -57,8 +53,8 @@ const MainComponent = () => {
                         <p>Artist : {song.Artist}</p>
                         <p>Release : {song.Release}</p>
                         <p>Category: {song.Category}</p>
-                        <button onClick={() => handleUpdate(song._id)}>Update</button>
-                        <button onClick={() => handleDelete(song._id)}>Delete</button>
+                        <button onClick={() => handleUpdate(song.SongId)}>Update</button>
+                        <button onClick={() => handleDelete(song.SongId)}>Delete</button>
                     </div>
                 ))}
             </div>
