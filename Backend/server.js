@@ -36,17 +36,16 @@ app.use((err, req, res, next) => {
 app.use("/songs", songRouter)
 app.use("/signup", signUpRouter) 
 app.use("/edit",editRouter)
-app.use("/edit",deleteRouter)
+app.use("/delete",deleteRouter)
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send("Something went wrong!");
 });
 
-app.listen(3000, () => {
-    console.log("Running on port 3000")
-})
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

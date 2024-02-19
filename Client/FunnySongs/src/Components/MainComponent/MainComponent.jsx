@@ -27,7 +27,7 @@ const MainComponent = () => {
         };
     
         try {
-            const response = await axios.put(`https://s54-funny-songs.onrender.com/songs/${id}`, updatedData);
+            const response = await axios.put(`https://s54-funny-songs.onrender.com/edit/${id}`, updatedData);
             // Assuming you want to update the UI after successful update
             const updatedSongIndex = songs.findIndex(song => song._id === id);
             const updatedSongs = [...songs];
@@ -41,7 +41,7 @@ const MainComponent = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://s54-funny-songs.onrender.com/songs/${id}`);
+            await axios.delete(`https://s54-funny-songs.onrender.com/delete/${id}`);
             // Assuming you want to update the UI after successful deletion
             const filteredSongs = songs.filter(song => song._id !== id);
             setSongs(filteredSongs);
