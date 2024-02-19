@@ -166,15 +166,15 @@ export default function NavBar() {
                     edge="start"
                     color="inherit"
                     aria-label="open drawer"
-                    sx={{ mr: 1 }}
+                    sx={{ mr: 4 }}
                     onClick={handleMobileMenuOpen}
                 >
                     <MenuIcon style={{color:"white"}} />
                 </IconButton>
-                <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '10px' }} />
+                <img src={logo} alt="Logo" style={{ height: '150px', marginRight: '10px' }} />
                 <Search>
                     <SearchIconWrapper>
-                        <SearchIcon style={{ color: 'white', fontSize: 25 }} /> 
+                        <SearchIcon style={{ color: 'white', fontSize: 30 }} /> 
                     </SearchIconWrapper>
                     <StyledInputBase
                         placeholder="Search…"
@@ -183,30 +183,15 @@ export default function NavBar() {
                 </Search>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                        <Badge badgeContent={4} color="error">
-                            <MailIcon style={{ color: 'white', fontSize: 25 }} /> 
-                        </Badge>
-                    </IconButton>
                     <IconButton
                         size="large"
-                        aria-label="show 17 new notifications"
-                        color="inherit"
-                    >
-                        <Badge badgeContent={17} color="success">
-                            <NotificationsIcon style={{ color: 'white', fontSize: 25 }} /> 
-                        </Badge>
-                    </IconButton>
-                    <IconButton
-                        size="large"
-                        edge="end"
                         aria-label="account of current user"
                         aria-controls={menuId}
                         aria-haspopup="true"
                         onClick={handleProfileMenuOpen}
                         color="inherit"
                     >
-                        <AccountCircle style={{ color: 'white', fontSize: 30 }} /> 
+                        <AccountCircle style={{ color: 'white', fontSize: 60 }} /> 
                     </IconButton>
                 </Box>
             </Toolbar>

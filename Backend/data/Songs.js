@@ -1,4 +1,4 @@
-const Song = require("./schema.js")
+const { User,Song } = require("../data/schema.js")
 require("dotenv").config({path:'../.env'})
     
 
@@ -134,7 +134,6 @@ mongoose.connect(process.env.mongoUrl, {
 
 const SongData = [Song1, Song2, Song3, Song4, Song5, Song6, Song7, Song8, Song9, Song10 ,Song11 ];
 
-// const SongData = Song12;
 
 
 

@@ -6,7 +6,7 @@ var cors = require('cors')
 const app = express();
 app.use(cors())
 app.use(express.json());
-const { signUpRouter, songRouter , editRouter , deleteRouter } = require("./Routers")
+const { signUpRouter, songRouter , editRouter , deleteRouter, postRouter } = require("./Routers")
 const mongoose = require("mongoose")
 require("dotenv").config()
 
@@ -31,6 +31,8 @@ app.use("/songs", songRouter)
 app.use("/signup", signUpRouter) 
 app.use("/edit",editRouter)
 app.use("/delete",deleteRouter)
+app.use("/post",postRouter)
+
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

@@ -29,7 +29,6 @@ const User = mongoose.model("User", UserSchema);
 const SongSchema = new Schema({
     SongId: {
         type: Number,
-        required: true
     },
     SongName: {
         type: String,
@@ -39,9 +38,18 @@ const SongSchema = new Schema({
         type: String,
         required: true 
     },
-    Release: Number,
-    Category: String,
-    Artist: String,
+    Release: {
+        type:Number,
+        required:true
+    },
+    Artist: {
+        tyoe:String,
+        required:true
+    },
+    Category: {
+        type:String,
+        required:true
+    },
     likes: Number,
     time: { type: Date, default: Date.now() }
 }, { timestamps: true });

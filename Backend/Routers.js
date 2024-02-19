@@ -1,10 +1,9 @@
-// Routers.js
-
 const mongoose = require("mongoose")
 const express = require("express")
 const { Song, User } = require("./data/schema")
-const signUpRouter = express.Router()
 const songRouter = express.Router()
+const signUpRouter = express.Router()
+const postRouter = express.Router()
 const editRouter = express.Router()
 const deleteRouter = express.Router()
 
@@ -15,7 +14,7 @@ signUpRouter.use(express.json())
 songRouter.use(express.json())
 editRouter.use(express.json())
 deleteRouter.use(express.json())
-
+postRouter.use(express.json())
 
 
 async function connect() {
@@ -54,6 +53,23 @@ signUpRouter.post("/", async (req, res) => {
     }
 });
 
+postRouter.post("/", async (req, res) => {
+    const { SongName, SongLink, Artist, Release, Category, likes } = req.body;
+    try {
+        const newSong = new Song({
+            SongName,
+            SongLink,
+            Artist,
+            Release,
+            Category,
+        });
+        await newSong.save();
+        res.status(201).send('Song added successfully');
+    } catch (error) {
+        console.error('Error adding song:', error);
+        res.status(500).send('Internal server error');
+    }
+});
 
 editRouter.put("/:id", async (req, res) => {
     const { id } = req.params;
@@ -84,7 +100,4 @@ deleteRouter.delete("/:id", async (req, res) => {
     }
 });
 
-
-
-
-module.exports = { songRouter, signUpRouter, editRouter, deleteRouter };
+module.exports = { songRouter, postRouter, signUpRouter, editRouter, deleteRouter };
