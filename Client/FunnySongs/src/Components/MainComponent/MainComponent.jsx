@@ -18,25 +18,37 @@ const MainComponent = () => {
             });
     }, []);
 
-    const handleUpdate = (id) => {
-        // Implement your logic for updating the song here
-        console.log('Updating song with ID:', id);
-    };
-
-    const handleDelete = async (songId) => {
+    const handleUpdate = async (id) => {
+        // Assuming you have state variables to handle input fields for updating Artist, Release, and Category
+        const updatedData = {
+            Artist: updatedArtist,
+            Release: updatedRelease,
+            Category: updatedCategory
+        };
+    
         try {
-            // Send a DELETE request to delete the song with the given SongId
-            await axios.delete(`https://s54-funny-songs.onrender.com/delete/${songId}`);
-            // Remove the deleted song from the state
-            setSongs(songs.filter(song => song.SongId !== songId));
-            console.log('Song deleted successfully:', songId);
+            const response = await axios.put(`https://s54-funny-songs.onrender.com/songs/${id}`, updatedData);
+            // Assuming you want to update the UI after successful update
+            const updatedSongIndex = songs.findIndex(song => song._id === id);
+            const updatedSongs = [...songs];
+            updatedSongs[updatedSongIndex] = response.data;
+            setSongs(updatedSongs);
+        } catch (error) {
+            console.error('Error updating song:', error);
+        }
+    };
+    
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`https://s54-funny-songs.onrender.com/songs/${id}`);
+            // Assuming you want to update the UI after successful deletion
+            const filteredSongs = songs.filter(song => song._id !== id);
+            setSongs(filteredSongs);
         } catch (error) {
             console.error('Error deleting song:', error);
         }
     };
-    
-    
-    
     
 
     return (

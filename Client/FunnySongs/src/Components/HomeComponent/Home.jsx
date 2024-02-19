@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import "./Home.css";
 import NavBar from '../NavbarComponent/NavBar';
-import Landinglogo from "../Assets/Landing-Logo2.png";
+import Landinglogo from "../Assets/LandingLogo.png";
 import Footer from "../FooterComponent/Footer.jsx";
 
 const HomeComponent = () => {
