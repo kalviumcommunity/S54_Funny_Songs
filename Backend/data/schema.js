@@ -39,16 +39,16 @@ const SongSchema = new Schema({
         required: true 
     },
     Release: {
-        type:Number,
-        required:true
+        type: Number,
+        required: true
     },
     Artist: {
-        tyoe:String,
-        required:true
+        type: String, 
+        required: true
     },
     Category: {
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
     likes: Number,
     time: { type: Date, default: Date.now() }
