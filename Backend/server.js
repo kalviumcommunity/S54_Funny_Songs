@@ -6,7 +6,7 @@ var cors = require('cors')
 const app = express();
 app.use(cors())
 app.use(express.json());
-const { signUpRouter, songRouter } = require("./Routers")
+const { signUpRouter, songRouter , editRouter , deleteRouter } = require("./Routers")
 const mongoose = require("mongoose")
 require("dotenv").config()
 
