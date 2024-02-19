@@ -20,18 +20,12 @@ app.get("/ping", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-
     connectDatabase()
         .then(() => {
             console.log('Connected to Database!!!')
         })
     res.status(200).send("Connected to Database!!!")
-});
-
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send("Something went wrong!");
-});
+    });
 
 app.use("/songs", songRouter)
 app.use("/signup", signUpRouter) 

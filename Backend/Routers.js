@@ -3,7 +3,6 @@
 const mongoose = require("mongoose")
 const express = require("express")
 const { Song, User } = require("./data/schema")
-const app = express()
 const signUpRouter = express.Router()
 const songRouter = express.Router()
 const editRouter = express.Router()
