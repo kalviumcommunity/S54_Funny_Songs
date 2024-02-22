@@ -11,9 +11,13 @@ const mongoose = require("mongoose")
 require("dotenv").config()
 
 async function connectDatabase() {
-    await mongoose.connect(process.env.mongoUrl)
+    try {
+        await mongoose.connect(process.env.mongoUrl);
+        console.log('Connected to Database!!!');
+    } catch (error) {
+        console.error('Error connecting to Database:', error);
+    }
 }
-
 
 app.get("/ping", (req, res) => {
     res.send("Hi");

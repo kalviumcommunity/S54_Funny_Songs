@@ -54,15 +54,25 @@ signUpRouter.post("/", async (req, res) => {
 });
 
 postRouter.post("/", async (req, res) => {
-    const { SongName, SongLink, Artist, Release, Category, likes } = req.body;
+    const { SongName, SongLink, Artist, Release, Category } = req.body;
     try {
+        // Find the highest existing SongId
+        const highestSong = await Song.findOne().sort({ SongId: -1 });
+
+        // Determine the new SongId
+        const newSongId = highestSong ? highestSong.SongId + 1 : 1;
+
+        // Create the new song with the assigned SongId
         const newSong = new Song({
+            SongId: newSongId,
             SongName,
             SongLink,
             Artist,
             Release,
             Category,
         });
+
+        // Save the new song
         await newSong.save();
         res.status(201).send('Song added successfully');
     } catch (error) {
@@ -71,28 +81,41 @@ postRouter.post("/", async (req, res) => {
     }
 });
 
-editRouter.put("/:id", async (req, res) => {
-    const { id } = req.params;
-    const { Artist, Release, Category } = req.body;
+
+
+editRouter.put("/:songId", async (req, res) => {
     try {
-        const updatedSong = await Song.findByIdAndUpdate(id, { Artist, Release, Category }, { new: true });
+        const { songId } = req.params;
+        const { SongName, SongLink, Artist, Release, Category } = req.body;
+        const updatedSong = await Song.findOneAndUpdate({ SongId: songId }, {
+            SongName,
+            SongLink,
+            Artist,
+            Release,
+            Category
+        }, { new: true });
         if (!updatedSong) {
             return res.status(404).send('Song not found');
         }
-        res.status(200).json(updatedSong);
+        res.json(updatedSong);
     } catch (error) {
         console.error('Error updating song:', error);
         res.status(500).send('Internal server error');
     }
 });
 
-deleteRouter.delete("/:id", async (req, res) => {
-    const { id } = req.params;
+
+deleteRouter.delete('/:songId', async (req, res) => {
     try {
-        const deletedSong = await Song.findByIdAndDelete(id);
+        const { songId } = req.params;
+
+        // Find the song by SongId and delete it
+        const deletedSong = await Song.findOneAndDelete({ SongId: songId });
+
         if (!deletedSong) {
             return res.status(404).send('Song not found');
         }
+
         res.status(200).send('Song deleted successfully');
     } catch (error) {
         console.error('Error deleting song:', error);
