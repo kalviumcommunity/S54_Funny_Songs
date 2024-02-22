@@ -25,7 +25,6 @@ const MainComponent = () => {
 });
 
     const [loading, setLoading] = useState(true);
-    const [deleteLoadingId, setDeleteLoadingId] = useState(null); 
 
     useEffect(() => {
         setLoading(true);
@@ -43,17 +42,7 @@ const MainComponent = () => {
         return () => clearTimeout(delay);
     }, []);
 
-    const handleDelete = async (id) => {
-        setDeleteLoadingId(id); 
-        try {
-            await axios.delete(`https://s54-funny-songs.onrender.com/delete/${id}`);
-            setSongs(prevSongs => prevSongs.filter(song => song._id !== id));
-            setTimeout(() => setDeleteLoadingId(null), 2000); 
-        } catch (error) {
-            console.error('Error deleting song:', error);
-            setDeleteLoadingId(null);
-        }
-    };
+
     
 
     const handleModalOpen = () => {
@@ -111,14 +100,9 @@ const MainComponent = () => {
                                 <p>Category: {song.Category}</p>
                                 <center>
                                     <div className='edit-delete' >
-                                        <button onClick={() => handleDelete(song._id)}><DeleteForever /></button>
+                                        <button><DeleteForever /></button>
                                         <button><EditIcon /></button>
                                     </div>
-                                    {deleteLoadingId === song._id && ( 
-                                        <div>
-                                            <CircularProgress sx={{ color:"black", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
-                                        </div>
-                                    )}
                                 </center>
                             </div>
                         ))}
