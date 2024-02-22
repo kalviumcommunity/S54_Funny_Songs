@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
 
 
+
 .MuiAppBar-root {
     height: 70px;
 }
+
+img{
+    height: 150px;
+    margin-right: 10px;
+}
+
 
 .MuiToolbar-root {
     height: 150px; 
@@ -33,7 +40,12 @@
 @media only screen and (max-width: 426px) {
     .MuiToolbar-root {
         height: 80px; 
-        width: 100pvw;
+        width: 100vw;
     }
 
+    img{
+        height: 60px;
+        margin-right: 5px;
+        margin-left: 0px;
+    }
 }

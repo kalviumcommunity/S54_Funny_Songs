@@ -166,12 +166,12 @@ export default function NavBar() {
                     edge="start"
                     color="inherit"
                     aria-label="open drawer"
-                    sx={{ mr: 4 }}
+                    sx={{ mr: 0 }}
                     onClick={handleMobileMenuOpen}
                 >
                     <MenuIcon style={{color:"white"}} />
                 </IconButton>
-                <img src={logo} alt="Logo" style={{ height: '150px', marginRight: '10px' }} />
+                <img src={logo} alt="Logo"/>
                 <Search>
                     <SearchIconWrapper>
                         <SearchIcon style={{ color: 'white', fontSize: 30 }} /> 
