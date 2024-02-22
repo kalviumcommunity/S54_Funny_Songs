@@ -22,28 +22,54 @@ const MainComponent = () => {
         Release: '',
         Category: '',
         likes: ''
-});
+    });
 
     const [loading, setLoading] = useState(true);
+    const [deleteLoadingId, setDeleteLoadingId] = useState(null);
+    const [editSongId, setEditSongId] = useState(null);
 
     useEffect(() => {
         setLoading(true);
         const delay = setTimeout(() => {
             axios.get('https://s54-funny-songs.onrender.com/songs')
-            .then(response => {
-                setSongs(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching songs:', error);
-                setLoading(false);
-            });
+                .then(response => {
+                    setSongs(response.data);
+                    setLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error fetching songs:', error);
+                    setLoading(false);
+                });
         }, 2000);
         return () => clearTimeout(delay);
     }, []);
 
+    const handleDelete = async (songId) => {
+        setDeleteLoadingId(songId);
+        try {
+            await axios.delete(`https://s54-funny-songs.onrender.com/delete/${songId}`);
+            setSongs(prevSongs => prevSongs.filter(song => song.SongId !== songId));
+            setTimeout(() => setDeleteLoadingId(null), 2000);
+        } catch (error) {
+            console.error('Error deleting song:', error);
+            setDeleteLoadingId(null);
+        }
+    };
 
-    
+    const handleEdit = async (songId, updatedData) => {
+        try {
+            await axios.put(`https://s54-funny-songs.onrender.com/edit/${songId}`, updatedData);
+            setSongs(prevSongs => 
+                prevSongs.map(song => 
+                    song.SongId === songId ? { ...song, ...updatedData } : song
+                )
+            );
+            setOpenModal(false);
+        } catch (error) {
+            console.error('Error editing song:', error);
+            // Handle error
+        }
+    };
 
     const handleModalOpen = () => {
         setOpenModal(true);
@@ -51,25 +77,35 @@ const MainComponent = () => {
 
     const handleModalClose = () => {
         setOpenModal(false);
+        setEditSongId(null);
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewSongData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
+        // Check if the field is allowed to be edited
+        if (['Artist', 'Release', 'Category'].includes(name)) {
+            setNewSongData(prevData => ({
+                ...prevData,
+                [name]: value
+            }));
+        }
     };
+    
 
     const handleFormSubmit = async () => {
         try {
-            await axios.post('https://s54-funny-songs.onrender.com/post', newSongData);
-            setOpenModal(false);
-            location.reload();
+            if (editSongId) {
+                await handleEdit(editSongId, newSongData);
+                setOpenModal(false);
+                location.reload();
+            } else {
+                console.error('Adding new songs is not allowed in this function.');
+            }
         } catch (error) {
-            console.error('Error adding song:', error);
+            console.error('Error submitting form:', error);
         }
     };
+    
 
     return (
         <div>
@@ -85,7 +121,7 @@ const MainComponent = () => {
                 {!loading && (
                     <>
                         {songs.map(song => (
-                            <div key={song._id} className="iframe-container">
+                            <div key={song.SongId} className="iframe-container">
                                 <iframe
                                     title={`spotifyTrack${song.SongId}`}
                                     src={song.SongLink}
@@ -100,13 +136,18 @@ const MainComponent = () => {
                                 <p>Category: {song.Category}</p>
                                 <center>
                                     <div className='edit-delete' >
-                                        <button><DeleteForever /></button>
-                                        <button><EditIcon /></button>
+                                        <button onClick={() => handleDelete(song.SongId)} ><DeleteForever /></button>
+                                        <button onClick={() => {setOpenModal(true); setEditSongId(song.SongId); setNewSongData(song);}}><EditIcon /></button>
+                                        {deleteLoadingId === song.SongId && (
+                                            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                                                <CircularProgress sx={{ color: "black" }} />
+                                            </div>
+                                        )}
                                     </div>
                                 </center>
                             </div>
                         ))}
-                        
+
                         <div className='AddButton' >
                             <Button
                                 style={{ height: "500px", borderRadius: "50px", fontSize: "200px", minWidth: 0, width: '100%', padding: '15px', backgroundColor: "rgb(44, 44, 44)" }}
