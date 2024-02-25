@@ -16,7 +16,6 @@
             console.error('Error connecting to Database:', error);
         }
     }
-
     // Middleware for CORS and JSON parsing
     app.use(cors());
     app.use(express.json());
