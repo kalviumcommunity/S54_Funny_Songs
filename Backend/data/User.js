@@ -9,6 +9,7 @@ mongoose.connect(process.env.mongoUrl, {
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
 // Create user data
+
 const userData = [
     {
         FirstName: "Nivaash",
