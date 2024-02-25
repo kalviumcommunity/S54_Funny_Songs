@@ -11,8 +11,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AllRoutes/>  
-      {/* <MainComponent/> */}
+      {/* <AllRoutes/>   */}
+      <MainComponent/>
     </BrowserRouter>
   )
 }

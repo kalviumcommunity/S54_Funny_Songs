@@ -34,7 +34,7 @@ function SignUp(props) {
         event.preventDefault();
         console.log(formData);
         try {
-            await axios.post('https://s54-funny-songs.onrender.com/signup', formData);
+            await axios.post('http://localhost:3000/signup', formData);
             toast.success('Signup successful!');
             setTimeout(() => {
                 navigate('/Main');
@@ -166,7 +166,7 @@ function SignUp(props) {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 9 }}
+                                sx={{ mt: 3, mb: 8 }}
                             >
                                 Sign Up
                             </Button>

@@ -36,7 +36,7 @@
     });
 
     // Routes using the routers
-    app.use("/songs", songRouter);
+    app.use("/Songs", songRouter);
     app.use("/signup", signUpRouter);
     app.use("/edit", editRouter);
     app.use("/delete", deleteRouter);
