@@ -18,8 +18,13 @@ const userSignupSchema = Joi.object({
     Password: Joi.string().required().messages({
         'string.empty': 'Password is required',
         'any.required': 'Password is required'
+    }),
+    receiveNotifications: Joi.boolean().required().messages({
+        'any.required': 'Receive Notifications must be specified',
+        'boolean.base': 'Receive Notifications must be a boolean value'
     })
 });
+
 
 // Validation schema for adding a song
 const songSchema = Joi.object({
