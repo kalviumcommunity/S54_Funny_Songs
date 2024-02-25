@@ -9,9 +9,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import Formlogo from "../Assets/Logo.png";
 
-
 const MainComponent = () => {
-
     const [songs, setSongs] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [newSongData, setNewSongData] = useState({
@@ -27,6 +25,7 @@ const MainComponent = () => {
     const [loading, setLoading] = useState(true);
     const [deleteLoadingId, setDeleteLoadingId] = useState(null);
     const [editSongId, setEditSongId] = useState(null);
+    const [formErrors, setFormErrors] = useState({});
 
     useEffect(() => {
         setLoading(true);
@@ -82,30 +81,53 @@ const MainComponent = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        // Check if the field is allowed to be edited
-        if (['Artist', 'Release', 'Category'].includes(name)) {
-            setNewSongData(prevData => ({
-                ...prevData,
-                [name]: value
-            }));
-        }
+        setNewSongData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
     };
-    
 
     const handleFormSubmit = async () => {
-        try {
-            if (editSongId) {
-                await handleEdit(editSongId, newSongData);
-                setOpenModal(false);
-                location.reload();
-            } else {
-                console.error('Adding new songs is not allowed in this function.');
+        // Perform client-side validation
+        const errors = validateForm();
+        if (Object.keys(errors).length === 0) {
+            try {
+                if (editSongId) {
+                    await handleEdit(editSongId, newSongData);
+                    setOpenModal(false);
+                    location.reload();
+                } else {
+                    console.error('Adding new songs is not allowed in this function.');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
             }
-        } catch (error) {
-            console.error('Error submitting form:', error);
+        } else {
+            setFormErrors(errors);
         }
     };
-    
+
+    const validateForm = () => {
+        const errors = {};
+        if (!newSongData.SongName) {
+            errors.SongName = 'Song Name is required';
+        }
+        if (!newSongData.SongLink) {
+            errors.SongLink = 'Song Link is required';
+        }
+        if (!newSongData.Artist) {
+            errors.Artist = 'Artist is required';
+        }
+        if (!newSongData.Release) {
+            errors.Release = 'Release is required';
+        } else if (isNaN(newSongData.Release)) {
+            errors.Release = 'Release must be a number';
+        }
+        if (!newSongData.Category) {
+            errors.Category = 'Category is required';
+        }
+        return errors;
+    };
 
     return (
         <div>
@@ -162,15 +184,15 @@ const MainComponent = () => {
             </div>
             {/* Modal */}
             <Modal open={openModal} onClose={handleModalClose}>
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: 0, width: 500, height: 680, bgcolor: 'rgb(205, 205, 205)', borderRadius: "15px", boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: 0, width: 500, height: 800, bgcolor: 'rgb(205, 205, 205)', borderRadius: "15px", boxShadow: 24, p: 4 }}>
                     <center>
                         <img width={"280px"} src={Formlogo} alt="" />
                     </center>
-                    <TextField name="SongName" label="Song Name" variant="outlined" fullWidth margin="normal" value={newSongData.SongName} onChange={handleInputChange} />
-                    <TextField name="SongLink" placeholder='Enter the Embedded Spotify Song Link' label="Song Link" variant="outlined" fullWidth margin="normal" value={newSongData.SongLink} onChange={handleInputChange} />
-                    <TextField name="Artist" label="Artist" variant="outlined" fullWidth margin="normal" value={newSongData.Artist} onChange={handleInputChange} />
-                    <TextField name="Release" label="Release" variant="outlined" fullWidth margin="normal" value={newSongData.Release} onChange={handleInputChange} />
-                    <TextField name="Category" label="Category" variant="outlined" fullWidth margin="normal" value={newSongData.Category} onChange={handleInputChange} />
+                    <TextField name="SongName" label="Song Name" variant="outlined" fullWidth margin="normal" value={newSongData.SongName} onChange={handleInputChange} error={!!formErrors.SongName} helperText={formErrors.SongName} />
+                    <TextField name="SongLink" placeholder='Enter the Embedded Spotify Song Link' label="Song Link" variant="outlined" fullWidth margin="normal" value={newSongData.SongLink} onChange={handleInputChange} error={!!formErrors.SongLink} helperText={formErrors.SongLink} />
+                    <TextField name="Artist" label="Artist" variant="outlined" fullWidth margin="normal" value={newSongData.Artist} onChange={handleInputChange} error={!!formErrors.Artist} helperText={formErrors.Artist} />
+                    <TextField name="Release" label="Release" variant="outlined" fullWidth margin="normal" value={newSongData.Release} onChange={handleInputChange} error={!!formErrors.Release} helperText={formErrors.Release} />
+                    <TextField name="Category" label="Category" variant="outlined" fullWidth margin="normal" value={newSongData.Category} onChange={handleInputChange} error={!!formErrors.Category} helperText={formErrors.Category} />
                     <center>
                         <Button style={{ marginTop: "30px", backgroundColor: "black" }} variant="contained" onClick={handleFormSubmit}>Add Song</Button>
                     </center>

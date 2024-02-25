@@ -1,43 +1,25 @@
-const mongoose = require("mongoose")
-const express = require("express")
-const { Song, User } = require("./data/schema")
-const songRouter = express.Router()
-const signUpRouter = express.Router()
-const postRouter = express.Router()
-const editRouter = express.Router()
-const deleteRouter = express.Router()
+const express = require("express");
+const { Song, User } = require("./data/schema");
+const { userSignupSchema, songSchema, validate } = require("./Validation");
 
+const songRouter = express.Router();
+const signUpRouter = express.Router();
+const postRouter = express.Router();
+const editRouter = express.Router();
+const deleteRouter = express.Router();
 
-require("dotenv").config()
+// Apply JSON parsing middleware to all routers
+signUpRouter.use(express.json());
+songRouter.use(express.json());
+editRouter.use(express.json());
+deleteRouter.use(express.json());
+postRouter.use(express.json());
 
-signUpRouter.use(express.json())
-songRouter.use(express.json())
-editRouter.use(express.json())
-deleteRouter.use(express.json())
-postRouter.use(express.json())
+// Routes (using validation middleware)
 
-
-async function connect() {
-    await mongoose.connect(process.env.mongoUrl)
-}
-
-connect()
-    .then(() => {
-        console.log("Connected to Database!!!")
-    }).catch((err) => {
-        console.log("Error Connecting to Database!!!")
-    })
-
-songRouter.get("/", async (req, res) => {
-    await Song.find().then((data) => {
-        returnData = data
-        res.send(data)
-    })
-})
-
-signUpRouter.post("/", async (req, res) => { 
+// Signup route with validation middleware
+signUpRouter.post("/", validate(userSignupSchema), async (req, res) => {
     const { FirstName, LastName, EmailAddress, Password } = req.body;
-    console.log(req.body);
     try {
         const newUser = new User({
             FirstName: FirstName,
@@ -53,7 +35,8 @@ signUpRouter.post("/", async (req, res) => {
     }
 });
 
-postRouter.post("/", async (req, res) => {
+// Add song route with validation middleware
+postRouter.post("/", validate(songSchema), async (req, res) => {
     const { SongName, SongLink, Artist, Release, Category } = req.body;
     try {
         // Find the highest existing SongId
@@ -80,8 +63,6 @@ postRouter.post("/", async (req, res) => {
         res.status(500).send('Internal server error');
     }
 });
-
-
 
 editRouter.put("/:songId", async (req, res) => {
     try {
@@ -123,4 +104,5 @@ deleteRouter.delete('/:songId', async (req, res) => {
     }
 });
 
+// Export routers
 module.exports = { songRouter, postRouter, signUpRouter, editRouter, deleteRouter };

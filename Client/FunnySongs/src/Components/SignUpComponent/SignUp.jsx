@@ -17,10 +17,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./SignUp.css";
 import { useNavigate } from 'react-router-dom';
-import NavBar from "../NavbarComponent/NavBar.jsx"
+import NavBar from "../NavbarComponent/NavBar.jsx";
 
 function SignUp(props) {
-
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         FirstName: '',
@@ -29,6 +28,7 @@ function SignUp(props) {
         Password: '',
         receiveNotifications: false
     });
+    const [formErrors, setFormErrors] = useState({});
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -41,6 +41,7 @@ function SignUp(props) {
             }, 2000);
         } catch (error) {
             console.error('Error signing up:', error);
+            // Handle error
         }
     };
 
@@ -48,6 +49,23 @@ function SignUp(props) {
         const { name, value, checked, type } = event.target;
         const newValue = type === 'checkbox' ? checked : value;
         setFormData({ ...formData, [name]: newValue });
+    };
+
+    const handleBlur = (event) => {
+        const { name, value } = event.target;
+        // Validate the field using Joi
+        try {
+            const fieldSchema = Joi.object({ [name]: userSignupSchema[name] });
+            const fieldValidationResult = fieldSchema.validate({ [name]: value }, { abortEarly: false });
+            if (fieldValidationResult.error) {
+                setFormErrors({ ...formErrors, [name]: fieldValidationResult.error.details[0].message });
+            } else {
+                setFormErrors({ ...formErrors, [name]: null });
+            }
+        } catch (error) {
+            console.error('Error validating field:', error);
+            // Handle error
+        }
     };
 
     return (
@@ -84,6 +102,9 @@ function SignUp(props) {
                                         autoFocus
                                         value={formData.FirstName}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={!!formErrors.FirstName}
+                                        helperText={formErrors.FirstName}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
@@ -96,6 +117,9 @@ function SignUp(props) {
                                         autoComplete="family-name"
                                         value={formData.LastName}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={!!formErrors.LastName}
+                                        helperText={formErrors.LastName}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -108,6 +132,9 @@ function SignUp(props) {
                                         autoComplete="EmailAddress"
                                         value={formData.EmailAddress}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={!!formErrors.EmailAddress}
+                                        helperText={formErrors.EmailAddress}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -121,6 +148,9 @@ function SignUp(props) {
                                         autoComplete="new-Password"
                                         value={formData.Password}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={!!formErrors.Password}
+                                        helperText={formErrors.Password}
                                     />
                                 </Grid>
                                 <Grid item mt={3} xs={12}>
@@ -136,7 +166,7 @@ function SignUp(props) {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 11.4 }}
+                                sx={{ mt: 3, mb: 9 }}
                             >
                                 Sign Up
                             </Button>
@@ -151,7 +181,7 @@ function SignUp(props) {
                     </Box>
                 </Container>
             </ThemeProvider>
-            {/* <Footer /> */}
+            <Footer />
         </div>
     );
 }
