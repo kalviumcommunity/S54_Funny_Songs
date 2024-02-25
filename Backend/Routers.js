@@ -17,6 +17,14 @@ postRouter.use(express.json());
 
 // Routes (using validation middleware)
 
+
+songRouter.get("/", async (req, res) => {
+    await Song.find().then((data) => {
+        returnData = data
+        res.send(data)
+    })
+})
+
 // Signup route with validation middleware
 signUpRouter.post("/", validate(userSignupSchema), async (req, res) => {
     const { FirstName, LastName, EmailAddress, Password } = req.body;
