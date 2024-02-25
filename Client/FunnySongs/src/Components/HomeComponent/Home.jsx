@@ -20,7 +20,7 @@ const HomeComponent = () => {
                         Welcome to the ultimate destination for laughter and joy! Dive into a world of hilarious audio content that will tickle your funny bone and uplift your spirits. Whether you're in need of a good laugh or simply want to brighten your day, our collection of funny audios and songs has you covered. Get ready to press play and embark on a journey filled with laughter, giggles, and endless entertainment. Let the fun begin!
                     </h2>
                     <div>
-                        <Link to="/SignUp">
+                        <Link to="/Main">
                             <Button variant="contained" color="success" size='large' >
                                 Let's Laugh
                             </Button>
