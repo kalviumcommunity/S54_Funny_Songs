@@ -1,7 +1,6 @@
+//SignUp.jsx
 
-// signup.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,16 +13,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Footer from "../FooterComponent/Footer.jsx";
-import axios from 'axios'; 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "./SignUp.css";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import NavBar from "../NavbarComponent/NavBar.jsx"
+import { AppContext } from '../Context/Context.jsx'; 
 
-function SignUp(props) {
-
+function SignUp() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         FirstName: '',
@@ -32,14 +30,22 @@ function SignUp(props) {
         Password: '',
         receiveNotifications: false
     });
+    
+    const {isLoggedIn, setIsLoggedIn} = useContext(AppContext);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         console.log(formData);
         try {
             await axios.post('https://s54-funny-songs.onrender.com/signup', formData);
+    
+            // Store first name and last name in cookie upon successful signup
+            Cookies.set('firstName', formData.FirstName, { expires: 7 }); // Store FirstName, expires in 7 days
+            Cookies.set('lastName', formData.LastName, { expires: 7 }); // Store LastName, expires in 7 days
+    
             toast.success('Signup successful!');
             setTimeout(() => {
+                setIsLoggedIn(true); // Set isLoggedIn state to true upon successful signup
                 navigate('/Main');
             }, 2000);
         } catch (error) {
@@ -52,6 +58,11 @@ function SignUp(props) {
         const newValue = type === 'checkbox' ? checked : value;
         setFormData({ ...formData, [name]: newValue });
     };
+
+    // Redirect to Main if user is already logged in
+    if (isLoggedIn) {
+        navigate('/Main');
+    }
 
     return (
         <div>
@@ -154,7 +165,6 @@ function SignUp(props) {
                     </Box>
                 </Container>
             </ThemeProvider>
-            {/* <Footer /> */}
         </div>
     );
 }
