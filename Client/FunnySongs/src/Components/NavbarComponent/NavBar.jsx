@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
+// NavBar.jsx
+
+import React, { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
+import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import "./NavBar.css"
 import logo from "../Assets/NavLogo.png";
-import { Link } from 'react-router-dom';
-
+import Cookies from 'js-cookie'; // Import js-cookie library
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     padding: 'px',
     display: 'flex',
-    alignItems: 'center', // Align items vertically
+    alignItems: 'center',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -41,137 +35,56 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(1),
     height: '100%',
     display: 'flex',
-    alignItems: 'center', // Align items vertically
+    alignItems: 'center',
     justifyContent: 'center',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'white', // Set input text color to white
+    color: 'white',
     '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0), // Padding around the input text
+        padding: theme.spacing(1, 1, 1, 0),
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
-            width: '30ch', // Increased width for search bar
+            width: '30ch',
         },
     },
 }));
 
 export default function NavBar() {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
 
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    // Check if user is already logged in based on cookie
+    useEffect(() => {
+        const firstName = Cookies.get('firstName'); // Change to match the cookie name storing the first name
+        if (firstName) {
+            setIsLoggedIn(true);
+        }
+    }, []);
 
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
+    const handleLogout = () => {
+        Cookies.remove('firstName');
+        Cookies.remove('lastName');
+        
+        // Update isLoggedIn state to false
+        setIsLoggedIn(false);
+    
+        // Navigate to main page
+        navigate('/'); // assuming '/' is the path for the main page
     };
+    
 
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
+    const handleLogin = () => {
+        // Navigate to signup page
+        navigate('/signup'); // replace '/signup' with the actual path for the signup page
     };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
-    };
-
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
-
-    const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >   
-            <Link to="/Profile" >
-                <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            </Link>
-            <MenuItem onClick={handleMenuClose}>My Playlist</MenuItem>
-        </Menu>
-    );
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
-        </Menu>
-    );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Toolbar style={{ padding:"10px", backgroundColor:"rgb(0,0,0,0.9)", boxShadow: "0 0px 100px black", marginBottom: "0",fontFamily:"Kumbh Sans" }}>
 
-                <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                    sx={{ mr: 0 }}
-                    onClick={handleMobileMenuOpen}
-                >
-                    <MenuIcon style={{color:"white"}} />
-                </IconButton>
-                <img src={logo} alt="Logo"/>
+                <img src={logo} width={"350px"} alt="Logo"/>
                 <Search>
                     <SearchIconWrapper>
                         <SearchIcon style={{ color: 'white', fontSize: 30 }} /> 
@@ -183,20 +96,15 @@ export default function NavBar() {
                 </Search>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <IconButton
-                        size="large"
-                        aria-label="account of current user"
-                        aria-controls={menuId}
-                        aria-haspopup="true"
-                        onClick={handleProfileMenuOpen}
-                        color="inherit"
-                    >
-                        <AccountCircle style={{ color: 'white', fontSize: 60 }} /> 
-                    </IconButton>
+                    <div>
+                        {isLoggedIn ? (
+                            <Button variant='contained' color="error" sx={{marginRight: '40px'}} onClick={handleLogout}>Logout</Button>
+                        ) : (
+                            <Button variant="contained" color="success" sx={{marginRight: '40px'}} onClick={handleLogin}>Login</Button>
+                        )}
+                    </div>
                 </Box>
             </Toolbar>
-            {renderMobileMenu}
-            {renderMenu}
         </Box>
     );
 }

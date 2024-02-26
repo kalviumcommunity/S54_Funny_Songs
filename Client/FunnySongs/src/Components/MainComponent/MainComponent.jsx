@@ -1,3 +1,5 @@
+// MainComponent.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Modal, TextField, Box, LinearProgress, CircularProgress } from '@mui/material';
@@ -8,6 +10,8 @@ import { DeleteForever } from '@mui/icons-material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import Formlogo from "../Assets/Logo.png";
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const MainComponent = () => {
     const [songs, setSongs] = useState([]);
@@ -26,6 +30,8 @@ const MainComponent = () => {
     const [deleteLoadingId, setDeleteLoadingId] = useState(null);
     const [editSongId, setEditSongId] = useState(null);
     const [formErrors, setFormErrors] = useState({});
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
@@ -43,7 +49,18 @@ const MainComponent = () => {
         return () => clearTimeout(delay);
     }, []);
 
+    useEffect(() => {
+        const firstName = Cookies.get('firstName');
+        if (firstName) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
     const handleDelete = async (songId) => {
+        if (!isLoggedIn) {
+            navigate('/signup');
+            return;
+        }
         setDeleteLoadingId(songId);
         try {
             await axios.delete(`https://s54-funny-songs.onrender.com/delete/${songId}`);
@@ -56,6 +73,11 @@ const MainComponent = () => {
     };
 
     const handleEdit = async (songId, updatedData) => {
+        if (!isLoggedIn) {
+            alert('Please login to edit the data.');
+            navigate("/signup")
+            return;
+        }
         try {
             await axios.put(`https://s54-funny-songs.onrender.com/edit/${songId}`, updatedData);
             setSongs(prevSongs => 
@@ -69,15 +91,21 @@ const MainComponent = () => {
             // Handle error
         }
     };
+    
 
     const handleModalOpen = () => {
+        if (!isLoggedIn) {
+            navigate('/signup');
+            alert(('Login to Edit the Data'))
+            return;
+        }
         setOpenModal(true);
     };
 
     const handleModalClose = () => {
         setOpenModal(false);
-        setEditSongId(null);
     };
+    
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
