@@ -1,6 +1,8 @@
 const express = require("express");
 const { Song, User } = require("./data/schema");
 const { userSignupSchema, songSchema, validate } = require("./Validation");
+const jwt = require('jsonwebtoken')
+const crypto = require('crypto');
 
 const songRouter = express.Router();
 const signUpRouter = express.Router();
@@ -25,23 +27,37 @@ songRouter.get("/", async (req, res) => {
     })
 })
 
-// Signup route with validation middleware
+
 signUpRouter.post("/", validate(userSignupSchema), async (req, res) => {
     const { FirstName, LastName, EmailAddress, Password } = req.body;
+
     try {
+
+        const hashedPassword = crypto.createHash('sha256').update(Password).digest('hex');
+
         const newUser = new User({
             FirstName: FirstName,
             LastName: LastName,
             EmailAddress: EmailAddress,
-            Password: Password
+            Password: hashedPassword
         });
+
+        // Save the user
         await newUser.save();
-        res.status(201).send('User created successfully');
+
+        // Generate JWT token
+        const token = jwt.sign({ userId: newUser._id }, 'secretKey'); // Replace 'your-secret-key' with your actual secret key
+        
+        // Send response with token
+        res.status(201).json({ token }); // You may want to send additional data along with the token
     } catch (error) {
         console.error('Error creating user:', error);
         res.status(500).send('Internal server error');
     }
 });
+
+
+
 
 // Add song route with validation middleware
 postRouter.post("/", validate(songSchema), async (req, res) => {

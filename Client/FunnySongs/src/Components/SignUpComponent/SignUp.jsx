@@ -1,6 +1,6 @@
-//SignUp.jsx
+// SignUp.jsx
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext,useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,15 +37,15 @@ function SignUp() {
         event.preventDefault();
         console.log(formData);
         try {
-            await axios.post('https://s54-funny-songs.onrender.com/signup', formData);
-    
-            // Store first name and last name in cookie upon successful signup
-            Cookies.set('firstName', formData.FirstName, { expires: 7 }); // Store FirstName, expires in 7 days
-            Cookies.set('lastName', formData.LastName, { expires: 7 }); // Store LastName, expires in 7 days
-    
+            const response = await axios.post('http://localhost:3000/signup', formData);
+            
+            const token = response.data.token;
+
+            Cookies.set('token', token, { expires: 7 });
+
             toast.success('Signup successful!');
             setTimeout(() => {
-                setIsLoggedIn(true); // Set isLoggedIn state to true upon successful signup
+                setIsLoggedIn(true);
                 navigate('/Main');
             }, 2000);
         } catch (error) {
@@ -59,7 +59,14 @@ function SignUp() {
         setFormData({ ...formData, [name]: newValue });
     };
 
-    // Redirect to Main if user is already logged in
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+    
+
     if (isLoggedIn) {
         navigate('/Main');
     }

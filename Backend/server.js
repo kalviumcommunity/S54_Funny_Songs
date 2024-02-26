@@ -1,11 +1,12 @@
-    // server.js
+// server.js
 
-    const express = require("express");
-    const mongoose = require("mongoose");
-    const cors = require("cors"); // Import the cors module
-    const { songRouter, signUpRouter, editRouter, deleteRouter, postRouter } = require("./Routers");
-    require("dotenv").config();
-    const app = express();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors"); // Import the cors module
+const { songRouter, signUpRouter, editRouter, deleteRouter, postRouter } = require("./Routers");
+require("dotenv").config();
+const app = express();
+const PORT = 3000;
 
     // Connect to MongoDB
     async function connectDatabase() {
@@ -48,7 +49,6 @@
     });
 
     // Start the server
-    const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });

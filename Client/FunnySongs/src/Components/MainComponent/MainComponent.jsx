@@ -50,11 +50,12 @@ const MainComponent = () => {
     }, []);
 
     useEffect(() => {
-        const firstName = Cookies.get('firstName');
-        if (firstName) {
+        const token = Cookies.get('token');
+        if (token) {
             setIsLoggedIn(true);
         }
     }, []);
+    
 
     const handleDelete = async (songId) => {
         if (!isLoggedIn) {
