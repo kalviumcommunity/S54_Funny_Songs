@@ -66,6 +66,7 @@ export default function NavBar() {
 
     const handleLogout = () => {
         Cookies.remove('token');
+        Cookies.remove('firstName');
         
         // Update isLoggedIn state to false
         setIsLoggedIn(false);

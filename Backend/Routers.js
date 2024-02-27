@@ -9,6 +9,8 @@ const signUpRouter = express.Router();
 const postRouter = express.Router();
 const editRouter = express.Router();
 const deleteRouter = express.Router();
+const usersRouter = express.Router();
+
 
 // Apply JSON parsing middleware to all routers
 signUpRouter.use(express.json());
@@ -16,6 +18,7 @@ songRouter.use(express.json());
 editRouter.use(express.json());
 deleteRouter.use(express.json());
 postRouter.use(express.json());
+usersRouter.use(express.json());
 
 // Routes (using validation middleware)
 
@@ -26,6 +29,17 @@ songRouter.get("/", async (req, res) => {
         res.send(data)
     })
 })
+
+
+usersRouter.get("/", async (req, res) => { // Define the route handler for /users GET endpoint
+    try {
+        const users = await User.find(); // Fetch all users from the database
+        res.json(users); // Send the users as JSON response
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).send('Internal server error');
+    }
+});
 
 
 signUpRouter.post("/", validate(userSignupSchema), async (req, res) => {
@@ -61,7 +75,7 @@ signUpRouter.post("/", validate(userSignupSchema), async (req, res) => {
 
 // Add song route with validation middleware
 postRouter.post("/", validate(songSchema), async (req, res) => {
-    const { SongName, SongLink, Artist, Release, Category } = req.body;
+    const { SongName, SongLink, Artist, Release, Category,Created_by } = req.body;
     try {
         // Find the highest existing SongId
         const highestSong = await Song.findOne().sort({ SongId: -1 });
@@ -77,6 +91,7 @@ postRouter.post("/", validate(songSchema), async (req, res) => {
             Artist,
             Release,
             Category,
+            Created_by
         });
 
         // Save the new song
@@ -129,4 +144,4 @@ deleteRouter.delete('/:songId', async (req, res) => {
 });
 
 // Export routers
-module.exports = { songRouter, postRouter, signUpRouter, editRouter, deleteRouter };
+module.exports = { songRouter, postRouter, signUpRouter, editRouter, deleteRouter , usersRouter };

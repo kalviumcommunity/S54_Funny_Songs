@@ -3,7 +3,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors"); // Import the cors module
-const { songRouter, signUpRouter, editRouter, deleteRouter, postRouter } = require("./Routers");
+const { songRouter, signUpRouter, editRouter, deleteRouter, postRouter, usersRouter } = require("./Routers");
 require("dotenv").config();
 const app = express();
 const PORT = 3000;
@@ -41,6 +41,8 @@ const PORT = 3000;
     app.use("/edit", editRouter);
     app.use("/delete", deleteRouter);
     app.use("/post", postRouter);
+    app.use("/users", usersRouter);
+
 
     // Error handling middleware
     app.use((err, req, res, next) => {
@@ -52,3 +54,6 @@ const PORT = 3000;
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });
+
+
+    

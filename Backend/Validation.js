@@ -51,8 +51,13 @@ const songSchema = Joi.object({
     Category: Joi.string().required().messages({
         'string.empty': 'Category is required',
         'any.required': 'Category is required'
+    }),
+    Created_by: Joi.string().required().messages({
+        'string.empty': 'Created By is required',
+        'any.required': 'Created By is required'
     })
 });
+
 
 const validate = (schema) => {
     return (req, res, next) => {

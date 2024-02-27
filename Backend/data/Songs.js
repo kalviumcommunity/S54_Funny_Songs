@@ -9,7 +9,7 @@ const Song1 = new Song({
     Artist:"Funny Song Studio",
     Release: "2022",
     Category: "Audio",
-    likes: "100",
+    Created_by: "Nivaash"
 })
 
 const Song2 = new Song({
@@ -19,7 +19,7 @@ const Song2 = new Song({
     Artist:"Crazy Frog",
     Release: "2005",
     Category: "Music",
-    likes: "3000",
+    Created_by: "Nivaash"
 })
 
 const Song3 = new Song({
@@ -29,7 +29,7 @@ const Song3 = new Song({
     Artist:"Bruno Mars",
     Release: "2010",
     Category: "Song",
-    likes: "10000",
+    Created_by: "Nivaash"
 })
 
 const Song4 = new Song({
@@ -39,7 +39,7 @@ const Song4 = new Song({
     Artist:"Tones and I",
     Release: "2019",
     Category: "Song",
-    likes: "200",
+    Created_by: "Nivaash"
 })
 
 const Song5 = new Song({
@@ -49,7 +49,7 @@ const Song5 = new Song({
     Artist:"Funny Minion Guys",
     Release: "2022",
     Category: "Audio",
-    likes: "100",
+    Created_by: "Nivaash"
 })
 
 const Song6 = new Song({
@@ -59,7 +59,7 @@ const Song6 = new Song({
     Artist:"Spongbob Squarepants",
     Release: "2022",
     Category: "Audio",
-    likes: "2000",
+    Created_by: "Nivaash"
 })
 
 const Song7 = new Song({
@@ -69,7 +69,7 @@ const Song7 = new Song({
     Artist:"Funny Minion Guys",
     Release: "2015",
     Category: "Audio",
-    likes: "10000",
+    Created_by: "Nivaash"
 })
 
 const Song8 = new Song({
@@ -79,7 +79,7 @@ const Song8 = new Song({
     Artist:"PSY",
     Release: "2019",
     Category: "Audio",
-    likes: "2000",
+    Created_by: "Nivaash"
 })
 
 const Song9 = new Song({
@@ -89,7 +89,7 @@ const Song9 = new Song({
     Artist:"Funny Minion Guys",
     Release: "2021",
     Category: "Audio",
-    likes: "8000",
+    Created_by: "Nivaash"
 })
 
 const Song10 = new Song({
@@ -99,7 +99,7 @@ const Song10 = new Song({
     Artist:"Funny Minion Guys",
     Release: "2023",
     Category: "Song",
-    likes: "500",
+    Created_by: "Nivaash"
 })
 
 

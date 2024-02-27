@@ -1,8 +1,6 @@
-// MainComponent.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Modal, TextField, Box, LinearProgress, CircularProgress } from '@mui/material';
+import { Button, Modal, TextField, Box, LinearProgress, CircularProgress, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import "./MainComponent.css";
 import NavBar from '../NavbarComponent/NavBar';
 import Footer from '../FooterComponent/Footer';
@@ -12,18 +10,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import Formlogo from "../Assets/Logo.png";
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const MainComponent = () => {
     const [songs, setSongs] = useState([]);
+    const [filteredSongs, setFilteredSongs] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [newSongData, setNewSongData] = useState({
-        SongId: '',
         SongName: '',
         SongLink: '',
         Artist: '',
         Release: '',
         Category: '',
-        likes: ''
+        Created_by: ''
     });
 
     const [loading, setLoading] = useState(true);
@@ -31,7 +30,10 @@ const MainComponent = () => {
     const [editSongId, setEditSongId] = useState(null);
     const [formErrors, setFormErrors] = useState({});
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUserName] = useState('');
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate();
+    const [selectedUser, setSelectedUser] = useState('All');
 
     useEffect(() => {
         setLoading(true);
@@ -39,23 +41,37 @@ const MainComponent = () => {
             axios.get('https://s54-funny-songs.onrender.com/songs')
                 .then(response => {
                     setSongs(response.data);
+                    setFilteredSongs(response.data);
                     setLoading(false);
                 })
                 .catch(error => {
                     console.error('Error fetching songs:', error);
                     setLoading(false);
                 });
+            axios.get('https://s54-funny-songs.onrender.com/users')
+                .then(response => {
+                    const userNames = response.data.map(user => user.FirstName); // Update this line to match the user data structure
+                    setUsers(userNames);
+                })
+                .catch(error => {
+                    console.error('Error fetching users:', error);
+                });
         }, 2000);
         return () => clearTimeout(delay);
     }, []);
+
 
     useEffect(() => {
         const token = Cookies.get('token');
         if (token) {
             setIsLoggedIn(true);
+            // Get user's first name from cookie
+            const userInfo = JSON.parse(atob(token.split('.')[1]));
+            const firstName = userInfo.firstName;
+            setUserName(firstName);
         }
     }, []);
-    
+
 
     const handleDelete = async (songId) => {
         if (!isLoggedIn) {
@@ -66,6 +82,7 @@ const MainComponent = () => {
         try {
             await axios.delete(`https://s54-funny-songs.onrender.com/delete/${songId}`);
             setSongs(prevSongs => prevSongs.filter(song => song.SongId !== songId));
+            setFilteredSongs(prevSongs => prevSongs.filter(song => song.SongId !== songId));
             setTimeout(() => setDeleteLoadingId(null), 2000);
         } catch (error) {
             console.error('Error deleting song:', error);
@@ -92,7 +109,8 @@ const MainComponent = () => {
             // Handle error
         }
     };
-    
+
+
 
     const handleModalOpen = () => {
         if (!isLoggedIn) {
@@ -106,7 +124,7 @@ const MainComponent = () => {
     const handleModalClose = () => {
         setOpenModal(false);
     };
-    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -116,25 +134,35 @@ const MainComponent = () => {
         }));
     };
 
-    const handleFormSubmit = async () => {
-        // Perform client-side validation
-        const errors = validateForm();
-        if (Object.keys(errors).length === 0) {
-            try {
-                if (editSongId) {
-                    await handleEdit(editSongId, newSongData);
-                    setOpenModal(false);
-                    location.reload();
-                } else {
-                    console.error('Adding new songs is not allowed in this function.');
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-            }
-        } else {
-            setFormErrors(errors);
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+
+        // Retrieve the first name from the cookie
+        const firstName = Cookies.get('firstName');
+
+        const SongData = { ...newSongData, Created_by: firstName };
+
+        try {
+            // Post the new song data
+            await axios.post('https://s54-funny-songs.onrender.com/post', SongData);
+
+            // Close the modal
+            handleModalClose();
+            location.reload()
+
+            // Show success message
+            toast.success('Song added successfully!');
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                setIsLoggedIn(true);
+                navigate('/Main');
+            }, 2000);
+        } catch (error) {
+            console.error('Error adding song:', error);
         }
     };
+
 
     const validateForm = () => {
         const errors = {};
@@ -158,9 +186,41 @@ const MainComponent = () => {
         return errors;
     };
 
+    const handleUserSelect = (selectedUser) => {
+        setSelectedUser(selectedUser);
+        if (selectedUser === 'All') {
+            setFilteredSongs(songs);
+        } else {
+            const filtered = songs.filter(song => song.Created_by === selectedUser);
+            setFilteredSongs(filtered);
+        }
+    };
+
+
     return (
         <div>
+            <ToastContainer />
             <NavBar />
+            <div className="dropdown-container">
+                <center>
+                <FormControl variant="outlined"  fullWidth margin="normal" style={{ width: '200px',backgroundColor:"gray",marginTop:"30px"}}>
+                    <InputLabel id="user-select-label">Select User</InputLabel>
+                    <Select
+                        labelId="user-select-label"
+                        id="user-select"    
+                        value={selectedUser}
+                        onChange={(e) => handleUserSelect(e.target.value)}
+                        label="Select User"
+                    >
+                        <MenuItem value="All">All Users</MenuItem>
+                        {users.map((user, index) => (
+                            <MenuItem key={index} value={user}>{user}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                </center>
+            </div>
+
             {loading && (
                 <center>
                     <div style={{ marginTop: "310px", width: '20%' }} className="loading-container">
@@ -171,7 +231,7 @@ const MainComponent = () => {
             <div className="main-container">
                 {!loading && (
                     <>
-                        {songs.map(song => (
+                        {filteredSongs.map(song => (
                             <div key={song.SongId} className="iframe-container">
                                 <iframe
                                     title={`spotifyTrack${song.SongId}`}
