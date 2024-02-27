@@ -57,15 +57,15 @@ export default function NavBar() {
 
     // Check if user is already logged in based on cookie
     useEffect(() => {
-        const firstName = Cookies.get('firstName'); // Change to match the cookie name storing the first name
-        if (firstName) {
+        const token = Cookies.get('token');
+        if (token) {
             setIsLoggedIn(true);
         }
     }, []);
+    
 
     const handleLogout = () => {
-        Cookies.remove('firstName');
-        Cookies.remove('lastName');
+        Cookies.remove('token');
         
         // Update isLoggedIn state to false
         setIsLoggedIn(false);
