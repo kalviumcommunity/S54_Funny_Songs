@@ -37,13 +37,14 @@ function SignUp() {
         event.preventDefault();
         console.log(formData);
         try {
-            const response = await axios.post('http://localhost:3000/signup', formData);
+            const response = await axios.post('https://s54-funny-songs.onrender.com/signup', formData);
             
             const token = response.data.token;
 
+            Cookies.set('firstName', formData.FirstName, { expires: 7 });
             Cookies.set('token', token, { expires: 7 });
 
-            toast.success('Signup successful!');
+            // toast.success('Signup successful!');
             setTimeout(() => {
                 setIsLoggedIn(true);
                 navigate('/Main');

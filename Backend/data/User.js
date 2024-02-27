@@ -15,7 +15,7 @@ const userData = [
         FirstName: "Nivaash",
         LastName: "😶‍🌫️",
         EmailAddress: "nidishnivash@gmail.com",
-        Password: "Nivaash_777",
+        Password: "Nivaash_777"
     },
 ];
 
