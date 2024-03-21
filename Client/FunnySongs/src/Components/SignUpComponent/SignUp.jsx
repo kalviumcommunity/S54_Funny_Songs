@@ -38,7 +38,7 @@ function SignUp() {
         event.preventDefault();
         console.log(formData);
         try {
-            const response = await axios.post('https://s54-funny-songs.onrender.com/signup', formData);
+            const response = await axios.post('https://songs-sand.vercel.app/signup', formData);
             
             const token = response.data.token;
 

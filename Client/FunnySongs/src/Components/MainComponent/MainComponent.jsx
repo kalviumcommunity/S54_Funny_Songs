@@ -38,7 +38,7 @@ const MainComponent = () => {
     useEffect(() => {
         setLoading(true);
         const delay = setTimeout(() => {
-            axios.get('https://s54-funny-songs.onrender.com/songs')
+            axios.get('https://songs-sand.vercel.app/songs')
                 .then(response => {
                     setSongs(response.data);
                     setFilteredSongs(response.data);
@@ -48,7 +48,7 @@ const MainComponent = () => {
                     console.error('Error fetching songs:', error);
                     setLoading(false);
                 });
-            axios.get('https://s54-funny-songs.onrender.com/users')
+            axios.get('https://songs-sand.vercel.app/users')
                 .then(response => {
                     const userNames = response.data.map(user => user.FirstName); // Update this line to match the user data structure
                     setUsers(userNames);
@@ -80,7 +80,7 @@ const MainComponent = () => {
         }
         setDeleteLoadingId(songId);
         try {
-            await axios.delete(`https://s54-funny-songs.onrender.com/delete/${songId}`);
+            await axios.delete(`https://songs-sand.vercel.app/delete/${songId}`);
             setSongs(prevSongs => prevSongs.filter(song => song.SongId !== songId));
             setFilteredSongs(prevSongs => prevSongs.filter(song => song.SongId !== songId));
             setTimeout(() => setDeleteLoadingId(null), 2000);
@@ -97,7 +97,7 @@ const MainComponent = () => {
             return;
         }
         try {
-            await axios.put(`https://s54-funny-songs.onrender.com/edit/${songId}`, updatedData);
+            await axios.put(`https://songs-sand.vercel.app/edit/${songId}`, updatedData);
             setSongs(prevSongs => 
                 prevSongs.map(song => 
                     song.SongId === songId ? { ...song, ...updatedData } : song
@@ -144,7 +144,7 @@ const MainComponent = () => {
 
         try {
             // Post the new song data
-            await axios.post('https://s54-funny-songs.onrender.com/post', SongData);
+            await axios.post('https://songs-sand.vercel.app/post', SongData);
 
             // Close the modal
             handleModalClose();
