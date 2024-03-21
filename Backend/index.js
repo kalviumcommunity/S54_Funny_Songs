@@ -1,8 +1,8 @@
-// server.js
+
 
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors"); // Import the cors module
+const cors = require("cors"); 
 const { songRouter, signUpRouter, editRouter, deleteRouter, postRouter, usersRouter } = require("./Routers");
 require("dotenv").config();
 const app = express();
@@ -17,7 +17,7 @@ const PORT = 3000;
             console.error('Error connecting to Database:', error);
         }
     }
-    // Middleware for CORS and JSON parsing
+    
     app.use(cors());
     app.use(express.json());
 
