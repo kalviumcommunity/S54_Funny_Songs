@@ -8,9 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import logo from "../Assets/NavLogo.png";
-import Cookies from 'js-cookie'; // Import js-cookie library
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import logo from "../Assets/NavLogo.webp";
+import Cookies from 'js-cookie'; 
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',

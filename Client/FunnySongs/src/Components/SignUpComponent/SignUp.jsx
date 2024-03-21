@@ -33,6 +33,7 @@ function SignUp() {
     
     const {isLoggedIn, setIsLoggedIn} = useContext(AppContext);
 
+    
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         console.log(formData);

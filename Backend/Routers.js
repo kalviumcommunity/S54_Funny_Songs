@@ -20,8 +20,6 @@ deleteRouter.use(express.json());
 postRouter.use(express.json());
 usersRouter.use(express.json());
 
-// Routes (using validation middleware)
-
 
 songRouter.get("/", async (req, res) => {
     await Song.find().then((data) => {
@@ -31,7 +29,7 @@ songRouter.get("/", async (req, res) => {
 })
 
 
-usersRouter.get("/", async (req, res) => { // Define the route handler for /users GET endpoint
+usersRouter.get("/", async (req, res) => { 
     try {
         const users = await User.find(); // Fetch all users from the database
         res.json(users); // Send the users as JSON response
