@@ -63,10 +63,8 @@ const validate = (schema) => {
     return (req, res, next) => {
         const { error } = schema.validate(req.body);
         if (error) {
-            // If validation fails, return a 400 Bad Request response with the validation error
             return res.status(400).json({ error: error.details[0].message });
         }
-        // If validation passes, proceed to the next middleware
         next();
     };
 };

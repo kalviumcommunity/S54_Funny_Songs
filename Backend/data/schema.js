@@ -2,10 +2,9 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-// Counter Schema for auto-incrementing UserId
 const CounterSchema = new Schema({
     _id: { type: String, required: true },
-    sequence_value: { type: Number, default: 1 } // Starting value for UserId
+    sequence_value: { type: Number, default: 1 }
 });
 
 const Counter = mongoose.model('Counter', CounterSchema);
