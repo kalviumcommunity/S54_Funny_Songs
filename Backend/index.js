@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors"); 
 const { songRouter, signUpRouter, editRouter, deleteRouter, postRouter, usersRouter } = require("./Routers");
 require("dotenv").config();
 const app = express();
@@ -16,10 +15,6 @@ async function connectDatabase() {
     }
 }
 
-app.use(cors({
-    origin: ['https://funny-songs.vercel.app', 'https://funny-songs.vercel.app/Main']
-  }));
-  
 app.use(express.json());
 
 // Routes
