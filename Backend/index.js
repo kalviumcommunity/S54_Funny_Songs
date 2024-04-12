@@ -17,8 +17,9 @@ async function connectDatabase() {
 }
 
 app.use(cors({
-  origin: 'https://funny-songs.vercel.app'
-}));
+    origin: ['https://funny-songs.vercel.app', 'https://funny-songs.vercel.app/Main']
+  }));
+  
 app.use(express.json());
 
 // Routes
